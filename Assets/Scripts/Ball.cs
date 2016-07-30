@@ -3,14 +3,26 @@ using System.Collections;
 
 public class Ball : MonoBehaviour {
 
+	public Vector3 velocity;
+	private Rigidbody rb;
+	private AudioSource audioSource;
 	// Use this for initialization
 	void Start() {
-		Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-		rb.velocity = new Vector3(0, 0, -200);
+		rb = gameObject.GetComponent<Rigidbody>();
+		rb.useGravity = false;
+
 	}
 	
 	// Update is called once per frame
 	void Update() {
 	
+	}
+
+	public void Launch(Vector3 velocity) {
+		rb.useGravity = true;
+		rb.velocity = velocity;
+
+		audioSource = GetComponent<AudioSource>();
+		audioSource.Play();
 	}
 }
