@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Ball : MonoBehaviour {
 
-	public Vector3 velocity;
 	private Rigidbody rb;
 	private AudioSource audioSource;
 	// Use this for initialization
@@ -18,6 +17,8 @@ public class Ball : MonoBehaviour {
 	
 	}
 
+
+	//
 	public void Launch(Vector3 velocity) {
 		rb.useGravity = true;
 		rb.velocity = velocity;

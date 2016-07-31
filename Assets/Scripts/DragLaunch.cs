@@ -7,17 +7,27 @@ public class DragLaunch : MonoBehaviour {
 	private Ball ball;
 	float startTime, endTime;
 	Vector3 startPos, endPos;
-	private float distance = 10.0f;
+	bool inPlay = false;
 
 	// Use this for initialization
 	void Start() {
 		ball = GetComponent<Ball>();
 	}
 
+	public void MoveBeforeStart(float amount) {
+		print("MoveBeforeStart");
+		if (inPlay) {
+			return;
+		}
+		ball.transform.position += new Vector3(amount, 0, 0);
+	}
+
 	public void DragStart() {
 		Debug.Log("Pointer down");
+		inPlay = true;
 		startTime = Time.time;
 		startPos = Input.mousePosition;
+		print("start " + startPos.x + " " + startPos.y);
 	}
 
 	public void DragEnd() {
@@ -25,10 +35,11 @@ public class DragLaunch : MonoBehaviour {
 		endTime = Time.time;
 		endPos = Input.mousePosition;
 		float dragDuration = endTime - startTime;
-		float speedX = (endPos.x - startPos.x) / dragDuration;
+		float speedX = 0.5f * (endPos.x - startPos.x) / dragDuration;
 		float speedY = (endPos.y - startPos.y) / dragDuration;
-		Vector3 launchVelocity = new Vector3(speedX, 0, -speedY);
+		Vector3 launchVelocity = new Vector3(speedX, 0, speedY);
 		ball.Launch(launchVelocity);
+		print("end " + endPos.x + " " + endPos.y);
 	}
 
 	//	void Update() {
