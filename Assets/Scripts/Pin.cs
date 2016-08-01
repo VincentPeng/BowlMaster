@@ -15,7 +15,7 @@ public class Pin : MonoBehaviour {
 	}
 
 	public bool IsStanding() {
-		float tiltX = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.x, 0));
+		float tiltX = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.x, 270));
 		float tiltZ = Mathf.Abs(transform.eulerAngles.z);
 		//print(tiltX + " " + tiltZ);
 		if (tiltX < standingThreshold && tiltZ < standingThreshold) {
