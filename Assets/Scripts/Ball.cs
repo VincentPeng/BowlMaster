@@ -26,4 +26,13 @@ public class Ball : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 		audioSource.Play();
 	}
+
+	public void Reset() {
+		Debug.Log("reseting ball");
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+		rb.useGravity = false;
+		transform.position = new Vector3(0, 22, 163);
+
+	}
 }
