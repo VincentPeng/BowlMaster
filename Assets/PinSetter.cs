@@ -5,7 +5,9 @@ using System.Collections;
 public class PinSetter : MonoBehaviour {
 
 	public float settleTime = 3.0f;
-	public Text PinCounter;
+	public Text pinCounter;
+	public float distToRaise = 100.0f;
+	public GameObject pinSet;
 
 	private Ball ball;
 	private float lastPinChangeTime = 0.0f;
@@ -19,7 +21,7 @@ public class PinSetter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		PinCounter.text = CountStanding().ToString();
+		pinCounter.text = CountStanding().ToString();
 		if (ballEnteredBox) {
 			CheckStanding();
 		}
@@ -40,11 +42,11 @@ public class PinSetter : MonoBehaviour {
 
 	// After x seconds(ball have entered the pinSetter already), if Standing pin account stay the same, call this function
 	void PinsHaveSettled() {
-		print("pins have settled");
+//		print("pins have settled");
 		ball.Reset();
 		lastPinCount = -1;
 		ballEnteredBox = false;
-		PinCounter.color = Color.green;
+		pinCounter.color = Color.green;
 	}
 
 	public int CountStanding() {
@@ -57,25 +59,44 @@ public class PinSetter : MonoBehaviour {
 		return sum;
 	}
 
+	public void RaisePins() {
+		Debug.Log("Raise pins");
+		foreach (Pin pin in GameObject.FindObjectsOfType<Pin>()) {
+			if (pin.IsStanding()) {
+				pin.GetComponent<Rigidbody>().useGravity = false;
+				pin.transform.position += new Vector3(0, distToRaise, 0);
+			}
+		}
+	}
+
+	public void LowerPins() {
+		Debug.Log("Lower pins");
+		foreach (Pin pin in GameObject.FindObjectsOfType<Pin>()) {
+			if (pin.IsStanding()) {
+				pin.GetComponent<Rigidbody>().useGravity = false;
+				pin.transform.position -= new Vector3(0, distToRaise, 0);
+			}
+		}
+	}
+
+	public void ResetPins() {
+		Debug.Log("Reset pins");
+	}
+
+	public 
 	void OnTriggerEnter(Collider other) {
-		print("box entered");
+//		print("box entered");
 		if (other.gameObject.GetComponent<Ball>()) {
-			print("Ball entered");
-			PinCounter.color = Color.red;
+//			print("Ball entered");
+			pinCounter.color = Color.red;
 			ballEnteredBox = true;
 		}
 		CountStanding();
 	}
 
 	void OnTriggerExit(Collider other) {
-		print("something left");
 		if (other.gameObject.GetComponent<Pin>()) {
-			print("pin left");
 			Destroy(other.gameObject);
 		}
-//		if (other.gameObject.GetComponent<Ball>()) {
-//			print("Ball left");
-//			Destroy(other.gameObject);
-//		}
 	}
 }
