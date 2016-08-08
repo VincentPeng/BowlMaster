@@ -27,6 +27,7 @@ public class PinSetter : MonoBehaviour {
 		}
 	}
 
+	// Be called every frame after ball enters the PinSetter. If pins standing number maintain the same for x seconds, means the pins have settled.
 	void CheckStanding() {
 		int currentStandingPins = CountStanding();
 		if (lastPinCount != currentStandingPins) {
@@ -49,6 +50,7 @@ public class PinSetter : MonoBehaviour {
 		pinCounter.color = Color.green;
 	}
 
+	// Return the number of pins are standing
 	public int CountStanding() {
 		int sum = 0;
 		foreach (Pin pin in GameObject.FindObjectsOfType<Pin>()) {
@@ -59,6 +61,7 @@ public class PinSetter : MonoBehaviour {
 		return sum;
 	}
 
+	// Move the standing up to air in order to swipe the fallen ones
 	public void RaisePins() {
 		Debug.Log("Raise pins");
 		foreach (Pin pin in GameObject.FindObjectsOfType<Pin>()) {
@@ -69,6 +72,7 @@ public class PinSetter : MonoBehaviour {
 		}
 	}
 
+	// opposite to RaisePins, lower the standing to the original place
 	public void LowerPins() {
 		Debug.Log("Lower pins");
 		foreach (Pin pin in GameObject.FindObjectsOfType<Pin>()) {
@@ -79,23 +83,24 @@ public class PinSetter : MonoBehaviour {
 		}
 	}
 
+	// Re-generate the 10 pins in the start position
 	public void ResetPins() {
 		Debug.Log("Reset pins");
+		Instantiate(pinSet, new Vector3(0, 5, 1870), Quaternion.AngleAxis(180, Vector3.up));
+
 	}
 
-	public 
+
 	void OnTriggerEnter(Collider other) {
-//		print("box entered");
 		if (other.gameObject.GetComponent<Ball>()) {
-//			print("Ball entered");
 			pinCounter.color = Color.red;
 			ballEnteredBox = true;
 		}
-		CountStanding();
 	}
 
 	void OnTriggerExit(Collider other) {
 		if (other.gameObject.GetComponent<Pin>()) {
+			Debug.Log("destroy pin");
 			Destroy(other.gameObject);
 		}
 	}

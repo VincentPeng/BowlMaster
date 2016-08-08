@@ -5,6 +5,7 @@ public class Ball : MonoBehaviour {
 
 	private Rigidbody rb;
 	private AudioSource audioSource;
+
 	// Use this for initialization
 	void Start() {
 		rb = gameObject.GetComponent<Rigidbody>();
@@ -18,7 +19,7 @@ public class Ball : MonoBehaviour {
 	}
 
 
-	//
+	// Launch the ball with specific velocity
 	public void Launch(Vector3 velocity) {
 		rb.useGravity = true;
 		rb.velocity = velocity;
@@ -27,6 +28,7 @@ public class Ball : MonoBehaviour {
 		audioSource.Play();
 	}
 
+	// Reset the ball to the start position
 	public void Reset() {
 		Debug.Log("reseting ball");
 		rb.velocity = Vector3.zero;

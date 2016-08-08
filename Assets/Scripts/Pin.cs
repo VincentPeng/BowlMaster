@@ -11,9 +11,9 @@ public class Pin : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		//print(name + " " + IsStanding());
 	}
 
+	// Use the rotation angular to define a pin is standing
 	public bool IsStanding() {
 		float tiltX = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.x, 270));
 		float tiltZ = Mathf.Abs(transform.eulerAngles.z);
